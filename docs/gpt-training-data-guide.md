@@ -1,104 +1,81 @@
-# Training Data Guide for GPT Model Progression
+# Training Data Guide for Model Progression
 
-This guide provides recommendations for training data to use with each model in our GPT progression. When specific examples are not provided, you can use these suggestions to test and demonstrate the capabilities of each model.
+This guide provides general recommendations for the **type and scale** of training data suitable for illustrating the capabilities and differences between each model stage in this repository's progression. *Note: The simplified implementations provided here are not trained on these scales; this guide is conceptual.* For actual large model pre-training, vastly larger datasets (billions or trillions of tokens) are used.
 
-## 1. Unigram Model
+## Model Stages and Data Recommendations
 
-**Recommended Data**: A small corpus of simple sentences or phrases.
-**Example**:
-```
-The cat sat on the mat.
-Dogs bark loudly.
-Birds fly in the sky.
-Fish swim in water.
-People walk on streets.
-```
+1.  **Unigram Model**
+    *   **Concept:** Models word frequency only.
+    *   **Data Type:** Small corpus of simple sentences.
+    *   **Example:** 50-100 basic sentences (`The cat sat. Dogs bark.`).
+    *   **Purpose:** Demonstrate basic probability calculation.
 
-**Size**: 50-100 sentences
-**Complexity**: Very low, focus on common words and simple structures
+2.  **Bigram Model**
+    *   **Concept:** Models P(word | previous_word).
+    *   **Data Type:** Short paragraphs showing word pairs.
+    *   **Example:** 200-300 sentences, maybe a children's story excerpt.
+    *   **Purpose:** Show basic context dependence and smoothing needs.
 
-## 2. Bigram Model
+3.  **N-gram Model (N=3+)**
+    *   **Concept:** Models P(word | previous_N-1_words).
+    *   **Data Type:** Longer paragraphs or short articles.
+    *   **Example:** 1000-2000 sentences (simple Wikipedia article).
+    *   **Purpose:** Illustrate longer context vs. increased sparsity.
 
-**Recommended Data**: Short paragraphs or sets of related sentences.
-**Example**:
-```
-The quick brown fox jumps over the lazy dog. The dog barks at the fox. The fox runs away quickly. The lazy dog goes back to sleep.
-```
+4.  **N-gram Model with Backoff**
+    *   **Concept:** Smoothing for unseen n-grams.
+    *   **Data Type:** Mix of common and less common constructions/phrases.
+    *   **Example:** 2000-5000 sentences (news articles + specific domain text).
+    *   **Purpose:** Show improved handling of unseen sequences.
 
-**Size**: 200-300 sentences
-**Complexity**: Low, but with some word relationships
+5.  **Word Embeddings (Concept)**
+    *   **Concept:** Learning dense vector representations.
+    *   **Data Type:** N/A (Conceptual stage). Real embedding training (Word2Vec, GloVe) uses large, diverse corpora (millions/billions of words).
 
-## 3. N-gram Model
+6.  **Feed-Forward Neural Network LM**
+    *   **Concept:** Neural prediction with fixed context window using embeddings.
+    *   **Data Type:** Diverse corpus (news, wiki, literature). Larger than n-grams.
+    *   **Example:** 10k-50k sentences.
+    *   **Purpose:** Demonstrate generalization via embeddings, fixed context limitation.
 
-**Recommended Data**: Longer paragraphs or short articles.
-**Example**: Use simple Wikipedia articles or children's stories.
+7.  **Recurrent Neural Network (RNN) LM**
+    *   **Concept:** Processing sequences with a hidden state.
+    *   **Data Type:** Coherent texts with sequential dependencies.
+    *   **Example:** 50k-100k sentences (full articles, short stories).
+    *   **Purpose:** Show handling of variable length, illustrate vanishing gradients.
 
-**Size**: 1000-2000 sentences
-**Complexity**: Medium, with varied sentence structures and vocabulary
+8.  **Long Short-Term Memory (LSTM) LM**
+    *   **Concept:** RNN with gates to manage memory and gradients.
+    *   **Data Type:** Longer coherent texts than basic RNN.
+    *   **Example:** 100k-500k sentences (book chapters, longer articles).
+    *   **Purpose:** Demonstrate improved handling of long-range dependencies.
 
-## 4. N-gram Model with Backoff
+9.  **Attention Mechanism (Concept)**
+    *   **Concept:** Allowing focus on relevant parts of input regardless of distance.
+    *   **Data Type:** N/A (Conceptual stage).
 
-**Recommended Data**: A mix of common phrases and less common constructions.
-**Example**: Combine simple news articles with some specialized text (e.g., scientific abstracts).
+10. **Transformer Language Model**
+    *   **Concept:** Architecture based solely on self-attention.
+    *   **Data Type:** Large, diverse corpus.
+    *   **Example:** 1M-5M sentences (books, articles, websites).
+    *   **Purpose:** Show power of attention, parallelization benefits.
 
-**Size**: 2000-5000 sentences
-**Complexity**: Medium to high, with some rare word combinations
+11. **Simplified GPT Language Model (Architecture Demo)**
+    *   **Concept:** Decoder-only Transformer for generation.
+    *   **Data Type:** (For demo/testing the *architecture*) - Similar scale to Transformer example.
+    *   **Example:** 5M-10M sentences.
+    *   **Purpose:** Illustrate the specific GPT structure. *(Real GPT pre-training uses vastly more data).*
 
-## 5. Feed-Forward Neural Network Language Model
+12. **Advanced GPT Implementations (Architecture Demo)**
+    *   **Concept:** Incorporating BPE, RAG concepts, etc.
+    *   **Data Type:** (For demo/testing the *architecture*) - Large, diverse corpus.
+    *   **Example:** 10M-100M sentences.
+    *   **Purpose:** Illustrate advanced components. *(Real GPT pre-training uses vastly more data).*
 
-**Recommended Data**: A diverse corpus of text from various sources.
-**Example**: Combine news articles, Wikipedia entries, and simple literature.
-
-**Size**: 10,000-50,000 sentences
-**Complexity**: High, with a wide range of topics and styles
-
-## 6. Recurrent Neural Network (RNN) Language Model
-
-**Recommended Data**: Longer coherent texts with sequential dependencies.
-**Example**: Full news articles, short stories, or book chapters.
-
-**Size**: 50,000-100,000 sentences
-**Complexity**: High, with emphasis on long-range dependencies
-
-## 7. Long Short-Term Memory (LSTM) Language Model
-
-**Recommended Data**: Similar to RNN, but with even longer coherent texts.
-**Example**: Full books, long-form articles, or collections of related documents.
-
-**Size**: 100,000-500,000 sentences
-**Complexity**: Very high, with complex long-range dependencies
-
-## 8. Transformer Language Model
-
-**Recommended Data**: Large, diverse corpus with a wide range of topics and styles.
-**Example**: Combine books, articles, websites, and forums across various domains.
-
-**Size**: 1-5 million sentences
-**Complexity**: Very high, with diverse topics and language usage
-
-## 9. Simplified GPT
-
-**Recommended Data**: Similar to Transformer, but potentially larger.
-**Example**: Use a subset of a large-scale web crawl or a curated dataset like WebText.
-
-**Size**: 5-10 million sentences
-**Complexity**: Extremely high, covering a wide range of internet text
-
-## 10. Advanced GPT
-
-**Recommended Data**: Large-scale, diverse corpus from multiple sources.
-**Example**: Combine web crawls, books, articles, code, and specialized texts.
-
-**Size**: 10-50 million sentences
-**Complexity**: Extremely high, with multi-domain knowledge
-
-## 11. M2-Optimized GPT
-
-**Recommended Data**: Similar to Advanced GPT, but potentially filtered or curated for quality.
-**Example**: Use a high-quality subset of a large language model training corpus.
-
-**Size**: 50-100 million sentences
-**Complexity**: Extremely high, focusing on high-quality, diverse text
+13. **Fine-Tuning GPT Models (Process)**
+    *   **Concept:** Adapting a pre-trained model to a specific task.
+    *   **Data Type:** Task-specific, labeled dataset (e.g., question-answer pairs, sentiment-labeled reviews, summarization pairs). Size varies greatly depending on task (hundreds to tens of thousands).
+    *   **Purpose:** Demonstrate specialization of pre-trained knowledge.
 
 ## General Guidelines for Selecting Training Data:
 

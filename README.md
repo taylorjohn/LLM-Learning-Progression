@@ -62,10 +62,13 @@ Additional documents that provide further explanation of various concepts, compa
 
 ## How to Use the Repository
 
-1. **Start with the basics**: Begin with the **unigram model** to understand how simple language models work.
-2. **Progress step-by-step**: Follow the models in sequence—**unigram**, **bigram**, **N-gram**, and then **RNN** and **LSTM**—before advancing to transformers and GPT models.
-3. **Do the exercises**: Each model directory contains **exercises** to help you implement the models and solidify your understanding.
-4. **Check the solutions**: Once you've completed the exercises, refer to the **solution files** to verify your work or get help with tricky problems.
+1.  **Follow the Progression:** Start with the first stage listed in the **Repository Structure** section above ([Unigram Model](docs/unigram-model-rust.md)). Read the corresponding documentation file in the `docs/` directory.
+2.  **Understand the Concepts:** Each documentation file explains the core ideas, advantages, and limitations of that particular model or concept.
+3.  **Examine the Code:** Where applicable, the documentation files link to relevant code examples (Rust `.rs` or Python `.py` files) located in the `src/` directory. Review this code to see a simplified implementation of the concepts discussed.
+4.  **Run Tests (Optional):**
+    *   For the Rust code (primarily the Unigram model initially), you can navigate to the `src/` directory and run `cargo test` (ensure Rust/Cargo is installed).
+    *   For Python code, you can run `python3 -m pytest` from the root directory (ensure Python3, pip3, pytest, and dependencies from `requirements.txt` are installed). Note that the current Python tests primarily check if code can be imported.
+5.  **Advance Sequentially:** Move through the stages listed in the **Repository Structure** section in order. Each stage builds upon the previous ones. Conceptual stages (like Word Embeddings, Attention Mechanism) provide background for subsequent models.
 
 ---
 

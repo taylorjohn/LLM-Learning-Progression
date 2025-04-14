@@ -1,16 +1,31 @@
-# Simplified GPT (Generative Pre-trained Transformer) Language Model in Rust
+# Simplified GPT (Generative Pre-trained Transformer) Language Model
 
 ## Introduction
 
-GPT (Generative Pre-trained Transformer) is a family of large language models that have achieved state-of-the-art results on many NLP tasks. GPT uses a decoder-only Transformer architecture and is trained on a vast amount of text data in an unsupervised manner. Our implementation will be a greatly simplified version, focusing on the key architectural elements that make GPT unique.
+GPT, standing for **Generative Pre-trained Transformer**, represents a specific and highly successful application of the Transformer architecture for language modeling. Developed by OpenAI, the GPT family of models leverages two key ideas:
+
+1.  **Decoder-Only Transformer:** Utilizes a stack of the **Decoder** blocks from the Transformer architecture (as described in `docs/transformer-language-model-rust.md`).
+2.  **Pre-training:** The model is first trained on a massive, diverse dataset of unlabeled text (e.g., large parts of the internet) using an unsupervised language modeling objective (predicting the next word). This "pre-training" phase allows the model to learn general grammar, syntax, world knowledge, and reasoning capabilities.
+
+After pre-training, the same model can often be adapted to various downstream tasks (like translation, summarization, question answering) through **fine-tuning** (as discussed in `docs/fine-tuning-gpt.md`) on smaller, task-specific labeled datasets, or even used directly via **prompting** (few-shot or zero-shot learning).
+
+Our implementation here is a *greatly simplified* version focusing only on the core decoder architecture for language modeling, without the massive scale or pre-training phase.
 
 ## How It Works
 
-1. **Tokenization**: Text is broken down into tokens (in our simple version, we'll use words as tokens).
-2. **Embeddings**: Each token is converted to a dense vector representation.
-3. **Positional Encoding**: Position information is added to the embeddings.
-4. **Multi-Layer Transformer Decoder**: A stack of Transformer decoder layers processes the input.
-5. **Language Modeling Head**: The final layer predicts the next token in the sequence.
+GPT operates as an **autoregressive** language model, meaning it generates text one token (word, subword) at a time, conditioning its prediction for the next token on the sequence of tokens generated so far.
+
+The process involves:
+
+1.  **Tokenization**: Input text is converted into a sequence of tokens using a specific tokenizer (often a subword tokenizer like BPE, discussed in `docs/llm-terminology-BPE.md`). *Our simple version uses words.*
+2.  **Input Embedding + Positional Encoding**: Tokens are mapped to embeddings, and positional encodings are added, just like in the standard Transformer decoder.
+3.  **Multi-Layer Transformer Decoder Stack**: The sequence of input embeddings (plus positional encodings) is processed sequentially through multiple Transformer decoder blocks. Each block applies:
+    *   Masked Multi-Head Self-Attention
+    *   Add & Norm
+    *   Position-wise Feed-Forward Network
+    *   Add & Norm
+4.  **Language Modeling Head**: After the final decoder block, a linear layer followed by a softmax function maps the final processed token representations to a probability distribution over the entire vocabulary.
+5.  **Generation/Sampling**: To generate text, the model predicts the probability distribution for the next token, a token is sampled from this distribution (using methods like greedy sampling, top-k sampling, or nucleus sampling), this new token is appended to the sequence, and the process repeats.
 
 ## Implementation in Rust
 
@@ -29,19 +44,19 @@ This implementation is a simplified version of GPT, focusing on the core archite
 7. The `train` method implements a simple training loop (without actual backpropagation for brevity).
 8. The `generate` method uses the trained model to generate new text.
 
-## Advantages of GPT
+## Advantages of GPT (Full Scale)
 
-- Powerful language modeling capabilities due to its large-scale pre-training on diverse text data.
-- Can be fine-tuned for various downstream tasks with minimal task-specific architecture modifications.
-- Exhibits strong few-shot and zero-shot learning abilities on many tasks.
-- Generates more coherent and contextually appropriate text compared to previous models.
+*   **State-of-the-Art Performance:** Large, pre-trained GPT models excel at language modeling and a wide array of downstream NLP tasks.
+*   **Few-Shot/Zero-Shot Learning:** Due to the knowledge gained during pre-training, large GPT models can often perform new tasks reasonably well with only a few examples (few-shot) or even just task instructions (zero-shot) provided in the prompt, without explicit fine-tuning.
+*   **Generative Capabilities:** Produces highly fluent, coherent, and contextually relevant text.
+*   **Scalability:** The architecture has proven to scale effectively with increased parameters, data, and compute. The remarkable capabilities emerge significantly from this scaling.
 
 ## Limitations
 
-- This implementation is greatly simplified and lacks many optimizations and techniques used in full-scale GPT models.
-- Requires significant computational resources for training and inference, especially for larger versions.
-- May produce biased or inconsistent outputs, reflecting biases in its training data.
-- Lacks explicit reasoning capabilities and can sometimes generate plausible-sounding but incorrect information.
+*   **Simplified Implementation:** This specific Rust code is a basic demonstration and lacks the scale, optimizations, pre-training data, and advanced tokenization of real GPT models.
+*   **Computational Cost:** Training and even running inference on large GPT models requires substantial computational resources (powerful GPUs/TPUs, large memory).
+*   **Potential Biases & Hallucinations:** Models can reflect biases present in their vast training data and may sometimes generate factually incorrect ("hallucinate") or nonsensical information confidently.
+*   **Lack of True Understanding:** While appearing knowledgeable, GPT models operate based on pattern matching learned from data, without genuine comprehension, reasoning, or grounding in the real world.
 
 ## Evaluation
 
@@ -49,9 +64,9 @@ While we haven't implemented perplexity calculation for this model, it could be 
 
 ## Next Steps
 
-This simplified GPT model represents the foundation of many current state-of-the-art language models. Some potential next steps could include:
-
-1. Implementing more advanced training techniques like adaptive learning rates and proper tokenization.
-2. Exploring methods for efficient fine-tuning on specific tasks.
-3. Investigating techniques for improving model interpretability and controlling generation.
-4. Exploring ways to combine the strengths of GPT with other model architectures or external knowledge sources.
+This simplified GPT architecture provides the conceptual basis. Moving towards real-world GPT involves:
+*   **Scaling Up:** Dramatically increasing the number of layers, embedding dimensions, attention heads, and overall parameters.
+*   **Pre-training:** Training on massive, diverse text corpora.
+*   **Advanced Tokenization:** Using subword tokenization like Byte-Pair Encoding (BPE).
+*   **Optimization & Efficiency:** Implementing techniques for efficient training and inference.
+The **Advanced GPT Implementations** section explores some variations and optimizations.

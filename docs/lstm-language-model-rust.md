@@ -2,21 +2,32 @@
 
 ## Introduction
 
-The Long Short-Term Memory (LSTM) Network is an advanced recurrent neural network architecture designed to better capture long-term dependencies in sequence data. LSTMs introduce a more complex structure of gates within each recurrent unit, allowing the network to selectively remember or forget information over long sequences.
+While simple Recurrent Neural Networks (RNNs) can theoretically handle long sequences, they suffer from the **vanishing gradient problem**, making it difficult for them to learn dependencies between elements that are far apart in a sequence. **Long Short-Term Memory (LSTM)** networks were specifically designed by Hochreiter & Schmidhuber (1997) to overcome this limitation. They introduce a more complex internal structure involving **gates** that regulate the flow of information, allowing the network to selectively remember relevant information over long periods and forget irrelevant details.
 
 ## How It Works
 
-1. **Word Embeddings**: Each word is represented as a dense vector, similar to previous models.
-2. **LSTM Cell**: The core of the LSTM is its cell state and three gates:
-   - Forget gate: decides what information to discard from the cell state
-   - Input gate: decides what new information to store in the cell state
-   - Output gate: decides what to output based on the cell state
-3. **Network Structure**: 
-   - Input layer: word embedding of the current word
-   - LSTM layer: processes the input and updates its cell state and hidden state
-   - Output layer: probability distribution over the vocabulary
-4. **Training**: The network is trained using Backpropagation Through Time (BPTT), similar to standard RNNs but with more complex gradient flow through the LSTM cell.
-5. **Generation**: Words are sampled from the predicted probability distribution, and the LSTM state is updated at each step.
+The core idea of an LSTM unit is the **cell state** (\( c_t \)), often visualized as a "conveyor belt" running through the entire sequence. Information can be added to or removed from this cell state, regulated by specialized neural network layers called **gates**. LSTMs also maintain a **hidden state** (\( h_t \)), similar to a simple RNN, which is a filtered version of the cell state used for making predictions.
+
+At each timestep \( t \), given the current input \( x_t \) and the previous hidden state \( h_{t-1} \) and cell state \( c_{t-1} \):
+
+1.  **Forget Gate (\( f_t \)):** Decides what information to *throw away* from the previous cell state \( c_{t-1} \). It looks at \( h_{t-1} \) and \( x_t \) and outputs a number between 0 and 1 for each number in \( c_{t-1} \) (using a sigmoid function, \( \sigma \)). 1 means "completely keep this," while 0 means "completely get rid of this."
+    \[ f_t = \sigma(W_f [h_{t-1}, x_t] + b_f) \]
+2.  **Input Gate (\( i_t \)) & Candidate Values (\( \tilde{c}_t \)):** Decides what *new information* to store in the cell state. This has two parts:
+    *   The **input gate layer** (sigmoid) decides which values we'll update: \( i_t = \sigma(W_i [h_{t-1}, x_t] + b_i) \).
+    *   A **tanh layer** creates a vector of new candidate values, \( \tilde{c}_t = \tanh(W_C [h_{t-1}, x_t] + b_C) \), that *could* be added to the state.
+3.  **Cell State Update (\( c_t \)):** Updates the old cell state \( c_{t-1} \) to the new cell state \( c_t \).
+    *   First, multiply the old state by the forget gate values: \( c_{t-1} * f_t \) (pointwise multiplication).
+    *   Then, add the new candidate values, scaled by the input gate values: \( i_t * \tilde{c}_t \).
+    \[ c_t = f_t * c_{t-1} + i_t * \tilde{c}_t \]
+4.  **Output Gate (\( o_t \)) & Hidden State (\( h_t \)):** Decides what part of the cell state to output as the hidden state \( h_t \).
+    *   The **output gate layer** (sigmoid) decides which parts of the cell state we'll output: \( o_t = \sigma(W_o [h_{t-1}, x_t] + b_o) \).
+    *   The cell state is put through \( \tanh \) (to push values between -1 and 1) and multiplied by the output gate's output:
+    \[ h_t = o_t * \tanh(c_t) \]
+    This \( h_t \) is then used to predict the next word (e.g., via a softmax layer) and is also passed to the next timestep.
+
+*(Note: \( [h_{t-1}, x_t] \) denotes concatenation of the two vectors. W and b represent weight matrices and bias vectors for each gate/layer.)*
+
+**Gated Recurrent Units (GRUs):** A simpler variant of LSTMs, introduced by Cho et al. (2014), combines the forget and input gates into a single "update gate" and merges the cell state and hidden state. GRUs often perform comparably to LSTMs on many tasks but have fewer parameters.
 
 ## Implementation in Rust
 
@@ -34,15 +45,14 @@ For this implementation, we'll use the `ndarray` crate for matrix operations and
 
 ## Advantages over Standard RNN
 
-- Better at capturing long-term dependencies in the text
-- More stable gradient flow during training, mitigating vanishing/exploding gradient problems
-- Ability to selectively remember or forget information, leading to more flexible learning
+-   **Mitigation of Vanishing Gradients:** The gating mechanism allows gradients to flow more easily through time, making it possible to learn much longer-term dependencies. The cell state acts like an additive component, helping gradients propagate without repeated matrix multiplications causing them to vanish or explode as quickly.
+-   **Selective Memory:** Explicitly designed to add or remove information, enabling better control over the hidden state.
 
 ## Limitations
 
-- More complex architecture with more parameters, potentially requiring more data and computational resources
-- This simple implementation doesn't include more advanced techniques like gradient clipping, proper BPTT, or regularization
-- Still may struggle with very long sequences or capturing global document structure
+-   **Complexity:** More complex than simple RNNs, with more parameters and computations per step.
+-   **Still Sequential:** Processing remains sequential, limiting parallelization over time.
+-   **Not Perfect Memory:** While much better than simple RNNs, LSTMs/GRUs can still eventually "forget" very distant information or struggle with extremely long dependencies compared to attention-based models.
 
 ## Evaluation
 
@@ -50,8 +60,4 @@ While we haven't implemented perplexity calculation for this model, it could be 
 
 ## Next Steps
 
-LSTMs represent a significant advancement in sequence modeling, but there are still further improvements to be made. Some potential next steps could include:
-
-1. Implementing bidirectional LSTMs to capture both past and future context
-2. Exploring attention mechanisms to allow the model to focus on different parts of the input sequence
-3. Moving towards transformer-based architectures, which have largely supplanted RNNs in many NLP tasks
+LSTMs and GRUs were the state-of-the-art for many sequence modeling tasks for several years. However, their sequential nature remained a bottleneck. The development of the **Attention Mechanism** (initially used *with* RNNs/LSTMs) and later the **Transformer architecture** (which relies solely on attention) provided ways to capture dependencies regardless of distance and allowed for much greater parallelization, leading to the next major leap in language modeling.

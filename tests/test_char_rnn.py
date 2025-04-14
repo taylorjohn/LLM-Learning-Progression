@@ -6,18 +6,18 @@ import os
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
 def test_import_char_rnn_pytorch():
-    """Tests if src/char-rnn-pytorch.py can be imported without crashing."""
+    """Tests if src/char_rnn_pytorch.py can be imported without crashing."""
     try:
-        # Import from the src package
+        # Import from the src package with underscores
         from src import char_rnn_pytorch
         assert True # If import succeeds, pass the test
     except Exception as e:
         pytest.fail(f"Failed to import src.char_rnn_pytorch: {e}")
 
 def test_import_char_rnn_pytorchev():
-    """Tests if src/char-rnn-pytorchev.py can be imported without crashing."""
+    """Tests if src/char_rnn_pytorchev.py can be imported without crashing."""
     try:
-        # Import from the src package
+        # Import from the src package with underscores
         from src import char_rnn_pytorchev
         assert True # If import succeeds, pass the test
     except Exception as e:

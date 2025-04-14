@@ -1,131 +1,32 @@
 # Language Model Comparison: Inputs, Outputs, and Significance
 
-This document compares the inputs, outputs, and significance of each language model in our progression, explaining the differences and importance of each step in simple terms.
+This document compares the key characteristics and significance of each language model stage in our progression.
 
-## 1. Unigram Model
+## Model Comparison Table
 
-**Input:** A corpus of text for training, and a single word or nothing for generation.
-**Output:** A single word, chosen based on overall frequency in the corpus.
+| Stage # | Model                                | Typical Input (Training / Generation)                | Typical Output (Generation)                          | Key Difference / Significance                                                                 |
+| :------ | :----------------------------------- | :--------------------------------------------------- | :--------------------------------------------------- | :-------------------------------------------------------------------------------------------- |
+| 1       | Unigram Model                        | Corpus / Previous word (ignored)                     | Single word (based on global frequency)              | Baseline; No context; Probabilistic selection.                                                |
+| 2       | Bigram Model                         | Corpus / Previous word                               | Single word (based on previous word)                 | Considers previous word; Basic context; Smoothing needed.                                   |
+| 3       | N-gram Model                         | Corpus / Previous N-1 words                          | Single word (based on previous N-1 words)            | Longer fixed context; Increased sparsity.                                                     |
+| 4       | N-gram Model w/ Backoff              | Corpus / Previous N-1 words                          | Single word (using highest available n-gram)         | Handles unseen n-grams via smoothing; More robust.                                            |
+| 5       | *Word Embeddings (Concept)*          | *(Large Corpus)*                                     | *(Dense word vectors)*                               | *Concept: Represent words as dense vectors capturing semantics; Enables neural models.*       |
+| 6       | Feed-Forward NN LM                   | Corpus (Windowed) / Previous N-1 words (indices)     | Probability distribution over vocab                  | Neural approach; Uses embeddings; Generalizes better but fixed context.                       |
+| 7       | Recurrent NN (RNN) LM                | Corpus (Sequences) / Sequence of words (indices)     | Probability distribution over vocab (per step)       | Handles variable length via hidden state; Vanishing gradient problem.                         |
+| 8       | Long Short-Term Memory (LSTM) LM     | Corpus (Sequences) / Sequence of words (indices)     | Probability distribution over vocab (per step)       | Gated RNN; Mitigates vanishing gradients; Better long-range memory.                         |
+| 9       | *Attention Mechanism (Concept)*      | *(Sequence pairs or single sequence)*                | *(Contextualized representations / Alignment weights)* | *Concept: Allows focus on relevant parts regardless of distance; Enables Transformer.*        |
+| 10      | Transformer LM                       | Corpus (Sequences) / Sequence of words (indices)     | Probability distribution over vocab (per step)       | Relies solely on self-attention; Parallelizable; Excellent long-range dependencies.           |
+| 11      | Simplified GPT LM (Architecture)     | Corpus (Sequences) / Sequence of words (indices)     | Probability distribution over vocab (per step)       | Decoder-only Transformer; Autoregressive; Foundation for LLMs.                                |
+| 12      | Advanced GPT Impls. (Architecture) | Corpus (Sequences) / Sequence of words (indices)     | Probability distribution over vocab (per step)       | Adds BPE, RAG concepts, etc.; Focus on scaling and efficiency.                              |
+| 13      | *Fine-Tuning GPT Models (Process)*   | *(Pre-trained Model + Task-specific labeled data)*   | *(Task-specific output, e.g., classification, summary)* | *Process: Adapting large pre-trained models for specific tasks; Specialization.*              |
 
-**Differences:**
-- Simplest model, no context consideration.
-- Each word is treated independently.
+## Key Progressions Summary
 
-**Significance:**
-- Baseline model for language modeling.
-- Introduces the concept of probabilistic word selection.
+*   **Context Handling:** Increasing ability to model longer and more complex dependencies (No context -> Fixed N -> Variable RNN state -> Global Attention).
+*   **Word Representation:** Moving from discrete counts to learned continuous vector spaces (Embeddings).
+*   **Sequence Modeling:** From processing fixed windows independently to handling variable-length sequences with state or global attention.
+*   **Handling Sparsity/Generalization:** Development of smoothing techniques (Backoff) and architectures that generalize better (Neural Networks).
+*   **Computational Paradigm:** Shift from sequential processing (RNNs) to highly parallelizable architectures (Transformers).
+*   **Training Paradigm:** Emergence of large-scale pre-training followed by fine-tuning or prompting (GPT).
 
-## 2. Bigram Model
-
-**Input:** A corpus of text for training, and a single word for generation.
-**Output:** A single word, chosen based on its likelihood to follow the input word.
-
-**Differences:**
-- Considers pairs of words (bigrams).
-- Introduces basic context awareness.
-
-**Significance:**
-- First step towards capturing word relationships.
-- Improves coherence in generated text.
-
-## 3. N-gram Model
-
-**Input:** A corpus of text for training, and N-1 words for generation.
-**Output:** A single word, chosen based on its likelihood to follow the N-1 input words.
-
-**Differences:**
-- Generalizes to any number of previous words (N).
-- Allows capturing longer contexts.
-
-**Significance:**
-- More flexible context consideration.
-- Can capture common phrases and local patterns in language.
-
-## 4. N-gram Model with Backoff
-
-**Input:** Same as N-gram model.
-**Output:** A single word, chosen based on the highest-order N-gram available, backing off to lower orders as needed.
-
-**Differences:**
-- Can handle unseen word sequences by backing off to shorter contexts.
-- More robust to data sparsity.
-
-**Significance:**
-- Addresses a major limitation of basic N-gram models.
-- Improves generalization to uncommon or unseen word sequences.
-
-## 5. Feed-Forward Neural Network Language Model
-
-**Input:** A fixed number of previous words (as word indices).
-**Output:** Probability distribution over all words in the vocabulary.
-
-**Differences:**
-- Uses dense word representations (embeddings).
-- Can capture more complex patterns through non-linear transformations.
-
-**Significance:**
-- First neural network-based model in our progression.
-- Introduces the concept of learned, distributed word representations.
-
-## 6. Recurrent Neural Network (RNN) Language Model
-
-**Input:** A sequence of words (as word indices) of any length.
-**Output:** Probability distribution over all words in the vocabulary for each position in the sequence.
-
-**Differences:**
-- Can handle variable-length input sequences.
-- Maintains a hidden state that's updated with each input word.
-
-**Significance:**
-- Allows processing of arbitrarily long sequences.
-- Can potentially capture long-range dependencies in text.
-
-## 7. Long Short-Term Memory (LSTM) Language Model
-
-**Input:** Same as RNN.
-**Output:** Same as RNN.
-
-**Differences:**
-- More complex internal structure (gates) compared to simple RNN.
-- Better at capturing and utilizing long-range dependencies.
-
-**Significance:**
-- Addresses the vanishing gradient problem of simple RNNs.
-- Improves the model's ability to capture and use long-term context.
-
-## 8. Transformer Language Model
-
-**Input:** A sequence of words (as word indices) of any length, typically with a maximum length limit.
-**Output:** Probability distribution over all words in the vocabulary for each position in the sequence.
-
-**Differences:**
-- Uses self-attention mechanism instead of recurrence.
-- Processes the entire input sequence in parallel.
-
-**Significance:**
-- Allows for more efficient training on larger datasets.
-- Can capture complex, long-range dependencies more effectively.
-
-## 9. Simplified GPT Language Model
-
-**Input:** Same as Transformer.
-**Output:** Same as Transformer.
-
-**Differences:**
-- Uses unidirectional (causal) attention.
-- Typically has a larger number of parameters and is trained on more diverse data.
-
-**Significance:**
-- Represents the architecture used in state-of-the-art language models.
-- Exhibits strong few-shot and zero-shot learning capabilities.
-
-## Key Progressions
-
-1. **Context Awareness:** From no context (Unigram) to theoretically unlimited context (Transformer/GPT).
-2. **Representation:** From discrete word counts to learned, continuous representations.
-3. **Sequence Handling:** From fixed-length inputs to variable-length sequences.
-4. **Long-Range Dependencies:** Progressively better at capturing and utilizing long-range information.
-5. **Generalization:** Improving ability to handle unseen sequences and adapt to various tasks.
-6. **Efficiency:** Movement towards models that can be trained more efficiently on larger datasets.
-
-Each step in this progression addressed limitations of previous models and introduced new capabilities, leading to increasingly sophisticated language models. The journey from simple counting statistics to complex neural architectures reflects the field's progress in capturing the nuances and complexities of human language.
+Each step built upon previous ideas, addressing limitations and enabling models to capture more intricate aspects of language, ultimately leading to the powerful foundation models we see today.
