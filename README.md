@@ -23,18 +23,24 @@ Here is an overview of the repository structure, with links to each stage of the
 
 ### 4. [N-gram Model with Backoff](docs/ngram-backoff-model-rust.md)
 
-### 5. [Feed-Forward Neural Network Language Model](docs/ffnn-language-model-rust.md)
+### 5. [Word Embeddings (Word2Vec/GloVe)](docs/word-embeddings.md) *(New - Conceptual Introduction)*
 
-### 6. [Recurrent Neural Network (RNN) Language Model](docs/rnn-language-model-rust.md)
+### 6. [Feed-Forward Neural Network Language Model](docs/ffnn-language-model-rust.md)
 
-### 7. [Long Short-Term Memory (LSTM) Language Model](docs/lstm-language-model-rust.md)
+### 7. [Recurrent Neural Network (RNN) Language Model](docs/rnn-language-model-rust.md)
 
-### 8. [Transformer Language Model](docs/transformer-language-model-rust.md)
+### 8. [Long Short-Term Memory (LSTM) Language Model](docs/lstm-language-model-rust.md) *(Could mention GRUs here)*
 
-### 9. [Simplified GPT Language Model](docs/gpt-language-model-rust.md)
+### 9. [Attention Mechanism](docs/attention-mechanism.md) *(New - Conceptual Introduction)*
 
-### 10. [Advanced GPT Implementations](docs/advanced-gpt-rust.md) 
+### 10. [Transformer Language Model](docs/transformer-language-model-rust.md)
+
+### 11. [Simplified GPT Language Model](docs/gpt-language-model-rust.md)
+
+### 12. [Advanced GPT Implementations](docs/advanced-gpt-rust.md) 
 (Covers variations like M2 Optimized and State-of-the-Art versions - see also [m2-optimized-gpt-rust.md](docs/m2-optimized-gpt-rust.md), [state-of-the-art-gpt-rust.md](docs/state-of-the-art-gpt-rust.md), etc.)
+
+### 13. [Fine-Tuning GPT Models](docs/fine-tuning-gpt.md) *(New - Practical Guide)*
 
 ---
 
@@ -50,6 +56,7 @@ Additional documents that provide further explanation of various concepts, compa
 - [GPT Dataset Integration Guide](docs/gpt-dataset-integration-guide.md)
 - [Model Comparison](docs/language-model-comparison.md)
 - [Future Directions (Beyond GPT)](docs/beyond-gpt-next-steps.md)
+- [Evaluation Metrics (Perplexity, BLEU, etc.)](docs/evaluation-metrics.md) *(New)*
 
 ---
 

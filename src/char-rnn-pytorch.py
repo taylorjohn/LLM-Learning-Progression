@@ -39,37 +39,6 @@ Birds of a feather flock together.
 Every cloud has a silver lining.
 """
 
-# Model parameters
-hidden_size = 128
-n_layers = 1
-lr = 0.002
-n_epochs = 1000
-print_every = 100
-
-# Create the model
-model = CharRNN(n_characters, hidden_size, n_characters, n_layers)
-criterion = nn.CrossEntropyLoss()
-optimizer = optim.Adam(model.parameters(), lr=lr)
-
-# Training loop
-for epoch in range(n_epochs):
-    hidden = model.init_hidden(1)
-    model.zero_grad()
-    loss = 0
-
-    for char in data[:-1]:
-        input = torch.tensor([[char_to_index[char]]], dtype=torch.long)
-        target = torch.tensor([[char_to_index[data[data.index(char)+1]]]], dtype=torch.long)
-        
-        output, hidden = model(input, hidden)
-        loss += criterion(output.squeeze(0), target.squeeze(0))
-
-    loss.backward()
-    optimizer.step()
-
-    if (epoch + 1) % print_every == 0:
-        print(f'Epoch {epoch+1}/{n_epochs}, Loss: {loss.item():.4f}')
-
 # Generate text
 def generate(model, start_char, length):
     model.eval()
@@ -77,15 +46,64 @@ def generate(model, start_char, length):
     input = torch.tensor([[char_to_index[start_char]]], dtype=torch.long)
     output_string = start_char
 
-    for _ in range(length):
-        output, hidden = model(input, hidden)
-        probabilities = nn.functional.softmax(output.squeeze(), dim=0)
-        predicted_index = torch.multinomial(probabilities, 1).item()
-        predicted_char = index_to_char[predicted_index]
-        output_string += predicted_char
-        input = torch.tensor([[predicted_index]], dtype=torch.long)
+    with torch.no_grad(): # Ensure no gradients are calculated during generation
+        for _ in range(length):
+            output, hidden = model(input, hidden)
+            # Apply softmax to the output of the correct shape
+            probabilities = nn.functional.softmax(output.view(-1), dim=0) # Use view(-1) 
+            # Handle potential issues with multinomial on CPU with non-finite values
+            if not torch.all(probabilities.isfinite()):
+                print("Warning: Non-finite probabilities detected, using uniform distribution.")
+                probabilities = torch.ones_like(probabilities) / probabilities.numel()
+                
+            predicted_index = torch.multinomial(probabilities, 1).item()
+            predicted_char = index_to_char[predicted_index]
+            output_string += predicted_char
+            input = torch.tensor([[predicted_index]], dtype=torch.long)
 
     return output_string
 
-# Generate some text
-print(generate(model, 'T', 100))
+# --- Main execution block ---
+if __name__ == "__main__":
+    # Model parameters
+    hidden_size = 128
+    n_layers = 1
+    lr = 0.002
+    n_epochs = 1000 # Reduced for faster testing during import
+    print_every = 100
+
+    # Create the model
+    model = CharRNN(n_characters, hidden_size, n_characters, n_layers)
+    criterion = nn.CrossEntropyLoss()
+    optimizer = optim.Adam(model.parameters(), lr=lr)
+
+    print("Starting training (from import)...") # Add print statement
+    # Training loop
+    for epoch in range(n_epochs):
+        hidden = model.init_hidden(1)
+        model.zero_grad()
+        loss = 0
+
+        # Use enumerate to avoid potential issues with data.index()
+        for i, char in enumerate(data[:-1]):
+            target_char = data[i+1]
+            input_tensor = torch.tensor([[char_to_index[char]]], dtype=torch.long)
+            target_tensor = torch.tensor([[char_to_index[target_char]]], dtype=torch.long)
+            
+            # Ensure hidden state is detached if it comes from previous iteration
+            hidden = hidden.detach()
+            
+            output, hidden = model(input_tensor, hidden)
+            # Ensure output and target shapes match criterion expectation (Batch x Classes, Batch)
+            loss += criterion(output.view(-1, n_characters), target_tensor.view(-1))
+
+        loss.backward()
+        optimizer.step()
+
+        if (epoch + 1) % print_every == 0:
+            print(f'Epoch {epoch+1}/{n_epochs}, Loss: {loss.item():.4f}')
+
+    print("\nGenerating text (from import)...") # Add print statement
+    # Generate some text
+    generated_output = generate(model, 'T', 100)
+    print(generated_output)
