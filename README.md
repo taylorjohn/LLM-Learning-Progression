@@ -1,5 +1,3 @@
-
-
 # GPT Model Progression Repository
 
 ## Introduction
@@ -17,65 +15,26 @@ This repository is structured to facilitate learning through:
 
 Here is an overview of the repository structure, with links to each stage of the progression:
 
-### 1. [Unigram Model](./01_unigram_model/README.md)
+### 1. [Unigram Model](docs/unigram-model-rust.md)
 
-- [Unigram Model Explanation](./01_unigram_model/README.md)
-- [Unigram Exercises](./01_unigram_model/exercises/unigram_exercises.rs)
-- [Unigram Solutions](./01_unigram_model/solutions/unigram_solution.rs)
+### 2. [Bigram Model](docs/bigram-model-rust.md)
 
-### 2. [Bigram Model](./02_bigram_model/README.md)
+### 3. [N-gram Model](docs/n-gram-model-rust.md)
 
-- [Bigram Model Explanation](./02_bigram_model/README.md)
-- [Bigram Exercises](./02_bigram_model/exercises/bigram_exercises.rs)
-- [Bigram Solutions](./02_bigram_model/solutions/bigram_solution.rs)
+### 4. [N-gram Model with Backoff](docs/ngram-backoff-model-rust.md)
 
-### 3. [N-gram Model](./03_ngram_model/README.md)
+### 5. [Feed-Forward Neural Network Language Model](docs/ffnn-language-model-rust.md)
 
-- [N-gram Model Explanation](./03_ngram_model/README.md)
-- [N-gram Exercises](./03_ngram_model/exercises/ngram_exercises.rs)
-- [N-gram Solutions](./03_ngram_model/solutions/ngram_solution.rs)
+### 6. [Recurrent Neural Network (RNN) Language Model](docs/rnn-language-model-rust.md)
 
-### 4. [RNN Model](./04_rnn_model/README.md)
+### 7. [Long Short-Term Memory (LSTM) Language Model](docs/lstm-language-model-rust.md)
 
-- [RNN Model Explanation](./04_rnn_model/README.md)
-- [RNN Exercises](./04_rnn_model/exercises/rnn_exercises.rs)
-- [RNN Solutions](./04_rnn_model/solutions/rnn_solution.rs)
+### 8. [Transformer Language Model](docs/transformer-language-model-rust.md)
 
-### 5. [LSTM Model](./05_lstm_model/README.md)
+### 9. [Simplified GPT Language Model](docs/gpt-language-model-rust.md)
 
-- [LSTM Model Explanation](./05_lstm_model/README.md)
-- [LSTM Exercises](./05_lstm_model/exercises/lstm_exercises.rs)
-- [LSTM Solutions](./05_lstm_model/solutions/lstm_solution.rs)
-
-### 6. [Transformer Model](./06_transformer_model/README.md)
-
-- [Transformer Model Explanation](./06_transformer_model/README.md)
-- [Transformer Exercises](./06_transformer_model/exercises/transformer_exercises.rs)
-- [Transformer Solutions](./06_transformer_model/solutions/transformer_solution.rs)
-
-### 7. [GPT Model](./07_gpt_model/README.md)
-
-- [GPT Model Explanation](./07_gpt_model/README.md)
-- [GPT Exercises](./07_gpt_model/exercises/gpt_exercises.rs)
-- [GPT Solutions](./07_gpt_model/solutions/gpt_solution.rs)
-
-### 8. [Fine-Tuning GPT](./08_fine_tuning_gpt/README.md)
-
-- [Fine-Tuning GPT Explanation](./08_fine_tuning_gpt/README.md)
-- [Fine-Tuning GPT Exercises](./08_fine_tuning_gpt/exercises/fine_tuning_gpt_exercises.rs)
-- [Fine-Tuning GPT Solutions](./08_fine_tuning_gpt/solutions/fine_tuning_gpt_solution.rs)
-
-### 9. [GPT-2 Model](./09_gpt_2/README.md)
-
-- [GPT-2 Model Explanation](./09_gpt_2/README.md)
-- [GPT-2 Exercises](./09_gpt_2/exercises/gpt_2_exercises.rs)
-- [GPT-2 Solutions](./09_gpt_2/solutions/gpt_2_solution.rs)
-
-### 10. [GPT-3 Model](./10_gpt_3/README.md)
-
-- [GPT-3 Model Explanation](./10_gpt_3/README.md)
-- [GPT-3 Exercises](./10_gpt_3/exercises/gpt_3_exercises.rs)
-- [GPT-3 Solutions](./10_gpt_3/solutions/gpt_3_solution.rs)
+### 10. [Advanced GPT Implementations](docs/advanced-gpt-rust.md) 
+(Covers variations like M2 Optimized and State-of-the-Art versions - see also [m2-optimized-gpt-rust.md](docs/m2-optimized-gpt-rust.md), [state-of-the-art-gpt-rust.md](docs/state-of-the-art-gpt-rust.md), etc.)
 
 ---
 
@@ -83,11 +42,14 @@ Here is an overview of the repository structure, with links to each stage of the
 
 Additional documents that provide further explanation of various concepts, comparisons, and model progression.
 
-- [Roadmap for Learning](./docs/roadmap.md)
-- [Terminology & Definitions](./docs/terminology.md) (explains terms like BPE, Attention, Hidden State, etc.)
-- [Hardware Requirements](./docs/hardware_requirements.md) (for running larger models)
-- [Model Comparison](./docs/comparison.md) (highlights the differences between N-gram, RNN, LSTM, Transformer, and GPT models)
-- [Future Directions](./docs/beyond_gpt.md) (explores next steps beyond GPT, including scaling and distributed training)
+- [Progression Summary](docs/language-model-progression-summary.md)
+- [GPT Progression Readme](docs/gpt-progression-readme.md)
+- [Terminology & Definitions (BPE)](docs/llm-terminology-BPE.md)
+- [GPT Repo Structure Guide](docs/gpt-repo-structure.md)
+- [GPT Training Data Guide](docs/gpt-training-data-guide.md)
+- [GPT Dataset Integration Guide](docs/gpt-dataset-integration-guide.md)
+- [Model Comparison](docs/language-model-comparison.md)
+- [Future Directions (Beyond GPT)](docs/beyond-gpt-next-steps.md)
 
 ---
 
@@ -96,7 +58,7 @@ Additional documents that provide further explanation of various concepts, compa
 1. **Start with the basics**: Begin with the **unigram model** to understand how simple language models work.
 2. **Progress step-by-step**: Follow the models in sequence—**unigram**, **bigram**, **N-gram**, and then **RNN** and **LSTM**—before advancing to transformers and GPT models.
 3. **Do the exercises**: Each model directory contains **exercises** to help you implement the models and solidify your understanding.
-4. **Check the solutions**: Once you’ve completed the exercises, refer to the **solution files** to verify your work or get help with tricky problems.
+4. **Check the solutions**: Once you've completed the exercises, refer to the **solution files** to verify your work or get help with tricky problems.
 
 ---
 
