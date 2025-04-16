@@ -57,6 +57,7 @@ Additional documents that provide further explanation of various concepts, compa
 - [Model Comparison](docs/language-model-comparison.md)
 - [Future Directions (Beyond GPT)](docs/beyond-gpt-next-steps.md)
 - [Evaluation Metrics (Perplexity, BLEU, etc.)](docs/evaluation-metrics.md) *(New)*
+- [Guide: Running External Assignments on Colab](docs/running_external_assignments_colab.md) *(New)*
 
 ---
 
@@ -126,6 +127,23 @@ This lifecycle highlights the significant engineering, resource, and ethical con
     *   For the Rust code (primarily the Unigram model initially), you can navigate to the `src/` directory and run `cargo test` (ensure Rust/Cargo is installed).
     *   For Python code, you can run `python3 -m pytest` from the root directory (ensure Python3, pip3, pytest, and dependencies from `requirements.txt` are installed). Note that the current Python tests primarily check if code can be imported.
 5.  **Advance Sequentially:** Move through the stages listed in the **Repository Structure** section in order. Each stage builds upon the previous ones. Conceptual stages (like Word Embeddings, Attention Mechanism) provide background for subsequent models.
+
+---
+
+## Project Implementation Learnings
+
+This section captures specific insights gained during the implementation phases of this project.
+
+### Rust (`cs336_basics_rs`)
+
+*   **Project Structure:** Utilized `cargo new --lib` for library setup.
+*   **Testing Strategy:** Employed both unit tests (`src/lib.rs` with `#[cfg(test)]`) and integration tests (`tests/` directory) to ensure correctness and validate the public API.
+*   **Core Workflow:** Relied on `cargo build` for compilation and `cargo test` for running all test suites.
+*   **Iterators & Closures:** Leveraged Rust's iterator methods (`split_whitespace`, `map`, `filter`) and closures for concise data processing, particularly in the `tokenize` function.
+*   **String Handling:** Worked with `&str` and `String`, using methods like `trim_matches`, `to_lowercase`, `is_empty`, `chars().any()`, and `collect()` for tokenization logic.
+*   **`trim_matches` Nuance:** Discovered the importance of the closure's return value (`true` => trim). Corrected the initial logic for trimming leading/trailing punctuation by simplifying the condition to `!c.is_alphanumeric()`.
+*   **`HashMap` Usage:** Implemented word counting using `HashMap::entry` and `or_insert` for efficient frequency tracking.
+*   **Test-Driven Debugging:** Used failing tests (unit and integration) to identify and fix subtle logical errors in both the implementation (`tokenize`) and the tests themselves.
 
 ---
 
