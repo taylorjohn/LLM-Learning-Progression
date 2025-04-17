@@ -10,6 +10,7 @@ Building upon the simplified GPT model, several advancements are crucial for bui
 ### 1. Subword Tokenization (e.g., BPE)
 
 *   **Concept:** Instead of splitting text into words or characters, subword tokenization breaks words into more common sub-units (e.g., "transformer" -> "transform", "er"). Techniques like Byte-Pair Encoding (BPE) or WordPiece are commonly used. (See `docs/llm-terminology-BPE.md` for more on BPE).
+*   **Why it's better:**
     *   **Handles Rare/Unknown Words:** Can represent new words by combining known subwords, avoiding "unknown token" issues.
     *   **Manages Vocabulary Size:** Keeps the vocabulary size manageable compared to word-level models, reducing embedding matrix size and computational cost.
     *   **Morphological Awareness:** Can capture relationships between morphologically related words (e.g., "run", "running").

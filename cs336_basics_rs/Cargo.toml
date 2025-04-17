@@ -1,0 +1,14 @@
+[package]
+name = "cs336_basics_rs"
+version = "0.1.0"
+edition = "2021"
+description = "Rust example structure mirroring Stanford CS336 Assignment 1"
+license = "MIT" # Assuming MIT based on the Python repo, adjust if needed
+
+# Add runtime dependencies here
+[dependencies]
+# Example: rand = "0.8" # If needed for library code
+
+# Add development/test dependencies here
+[dev-dependencies]
+# Example: assert_cmd = "2.0" # For testing command-line interfaces if applicable 
