@@ -58,6 +58,7 @@ Additional documents that provide further explanation of various concepts, compa
 - [Future Directions (Beyond GPT)](docs/beyond-gpt-next-steps.md)
 - [Evaluation Metrics (Perplexity, BLEU, etc.)](docs/evaluation-metrics.md) *(New)*
 - [Guide: Running External Assignments on Colab](docs/running_external_assignments_colab.md) *(New)*
+- [Guide: BPE Tokenizer Implementation](docs/bpe_tokenizer_implementation.md) *(New)*
 
 ---
 
