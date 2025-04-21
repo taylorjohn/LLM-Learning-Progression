@@ -40,4 +40,20 @@ spring2024-assignment1-basics/out/
 
 # OS specific
 .DS_Store
-Thumbs.db 
+Thumbs.db
+
+# Cache directories
+.pytest_cache/
+
+# Rust build artifacts
+cs336_basics_rs/target/
+
+# Common data file extensions (if generated/downloaded locally)
+*.csv
+*.jsonl
+*.tsv
+
+# Model files
+*.pt
+*.pth
+*.ckpt 
