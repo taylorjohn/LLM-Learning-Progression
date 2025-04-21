@@ -1,0 +1,43 @@
+# Python artifacts
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+*.egg-info/
+dist/
+build/
+*.so
+
+# Virtual environments
+.venv/
+venv/
+ENV/
+env/
+
+# Conda environment
+# If your environment is named something else, adjust accordingly
+# cs336_basics_env/ 
+# Example: If created in the project root, uncomment the line above
+# If managed globally by Conda, it might not need to be ignored here.
+
+# IDE/Editor specific
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# Data files
+# Ignore the large preprocessed data files
+spring2024-assignment1-basics/*.bin
+
+# Output directory
+# Ignore model checkpoints and logs
+spring2024-assignment1-basics/out/
+
+# Logs
+*.log
+
+# OS specific
+.DS_Store
+Thumbs.db 

@@ -42,6 +42,8 @@ Here is an overview of the repository structure, with links to each stage of the
 
 ### 13. [Fine-Tuning GPT Models](docs/fine-tuning-gpt.md) *(New - Practical Guide)*
 
+### 14. [Python Implementation: Training on TinyStories](spring2024-assignment1-basics/README.md) *(New - Practical Implementation)*
+
 ---
 
 ## Supporting Documentation
@@ -146,28 +148,20 @@ This section captures specific insights gained during the implementation phases 
 *   **`HashMap` Usage:** Implemented word counting using `HashMap::entry` and `or_insert` for efficient frequency tracking.
 *   **Test-Driven Debugging:** Used failing tests (unit and integration) to identify and fix subtle logical errors in both the implementation (`tokenize`) and the tests themselves.
 
+### Python (`spring2024-assignment1-basics`)
+
+*   **Environment Setup:** Utilized Conda for environment management (`cs336_basics` environment), encountered and resolved dependency conflicts (NumPy 1.x vs 2.x, Python 3.9 vs 3.10+ type hinting).
+*   **BPE Tokenization:** Implemented BPE tokenizer loading (`preprocess_tinystories.py`, `generate.py`) handling different vocabulary formats (`string->id` vs `id->bytes`) and ensuring consistency between vocab and merges files, specifically using standard GPT-2 tokenizer files (`gpt2_vocab.json`, `gpt2_merges.txt`).
+*   **Data Preprocessing:** Created a script (`preprocess_tinystories.py`) to tokenize the TinyStories dataset (Train/Validation text files) using the loaded BPE tokenizer and save the results as memory-mapped NumPy arrays (`train.bin`, `val.bin`) of `uint16` token IDs.
+*   **Transformer Training:** Implemented a training script (`train.py`) using PyTorch, leveraging components from `cs336_basics`:
+    *   Loads preprocessed data using `np.memmap`.
+    *   Configurable model architecture (`TransformerLM`), optimizer (AdamW), and learning rate schedule (cosine with warmup).
+    *   Includes validation loop, loss calculation (cross-entropy), gradient clipping, and checkpointing (saving best and final models).
+    *   Successfully ran an initial short training loop (5000 iterations) on TinyStories using MPS acceleration, achieving a validation loss of ~1.56.
+*   **Text Generation:** Created a script (`generate.py`) to load a trained checkpoint and generate text samples using:
+    *   Loading the trained model weights and corresponding tokenizer.
+    *   Sampling techniques including temperature scaling and top-k filtering.
+
 ---
 
 ## Contributing
-
-If you would like to contribute, feel free to submit a pull request with improvements, additional exercises, or more advanced techniques. Please make sure to follow the current structure and style of the repository.
-
----
-
-## License
-
-This repository is licensed under the MIT License.
-
----
-
-## Next Steps
-
-Once you've completed this progression, you can explore additional models and tasks such as:
-- **GPT-Neo** or **GPT-J** for larger transformer models.
-- **Fine-tuning** on specific datasets for more advanced tasks like text summarization, translation, or domain-specific generation.
-
----
-
-This updated `README.md` provides **easy navigation** to each of the models, exercises, and solution files, ensuring that learners can quickly find and access the material they need.
-
-Would you like to refine any specific part of the content, or is this good to be implemented in your repository?
