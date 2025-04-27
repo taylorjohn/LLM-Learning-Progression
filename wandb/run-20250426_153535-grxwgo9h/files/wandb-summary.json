@@ -1,0 +1,1 @@
+{"train/loss":3.3980398178100586,"iter":9990,"val/loss":3.1231579780578613,"_runtime":2870.8189,"_timestamp":1.745699006694973e+09,"_step":1038,"val/perplexity":22.71800945633838,"_wandb":{"runtime":2872},"learning_rate":3.0000176224805714e-05,"time_per_iter_ms":185.12225151062012}

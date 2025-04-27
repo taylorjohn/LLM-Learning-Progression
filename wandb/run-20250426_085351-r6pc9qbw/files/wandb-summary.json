@@ -1,0 +1,1 @@
+{"iter":9990,"_timestamp":1.7456898114179242e+09,"_step":1038,"train/loss":2.3333234786987305,"val/loss":2.335852861404419,"learning_rate":3.0000679724250607e-05,"val/perplexity":10.338273284822922,"_wandb":{"runtime":17795},"time_per_iter_ms":1710.9529972076416,"_runtime":17779.742494}

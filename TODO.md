@@ -1,0 +1,27 @@
+- [ ] Problem (bpe): Implement BPE training function
+- [x] Problem (tokenizer): Implement Tokenizer class (`tokenizer.py`)
+- Section 3: Transformer Basics
+    - [x] **Problem (positionwise_feedforward)**: Implement Position-wise Feed-Forward Network (`transformer.py`)
+    - [x] **Problem (softmax)**: Implement Softmax (`transformer.py`)
+    - [x] **Problem (rmsnorm)**: Implement RMSNorm (`transformer.py`)
+    - [x] **Problem (scaled_dot_product_attention)**: Implement Scaled Dot-Product Attention (`transformer.py`)
+    - [x] **Problem (multihead_attention)**: Implement Multi-Head Self-Attention (`transformer.py`)
+    - [x] **Problem (transformer_block)**: Implement a Transformer Block (`transformer.py`)
+    - [ ] Problem (embeddings): Implement sinusoidal positional embeddings.
+    - [ ] Problem (transformer): Implement the full Transformer model.
+    - [ ] Problem (generation): Implement greedy and top-k sampling.
+- Section 4: Training the Transformer
+    - [ ] Problem (dataloader): Implement the data loading pipeline.
+    - [ ] Problem (training): Implement the training loop.
+    - [ ] Problem (wandb): Integrate Weights & Biases logging.
+    - [ ] Problem (overfitting): Train a model that overfits to a small dataset.
+    - [ ] Problem (regularization): Apply regularization techniques.
+    - [ ] Problem (hp_tuning): Perform hyperparameter tuning.
+- Section 5: Analysis and Evaluation
+    - [ ] Problem (qualitative): Perform qualitative analysis of model predictions.
+    - [ ] Problem (quantitative): Evaluate the model using standard metrics.
+    - [ ] Problem (interpretability): Explore model interpretability techniques.
+- Bonus Problems
+    - [ ] Bonus Problem 1
+    - [ ] Bonus Problem 2
+- [ ] Apply MLX 4-bit quantization to the trained TinyStories model (from `spring2024-assignment1-basics`) 

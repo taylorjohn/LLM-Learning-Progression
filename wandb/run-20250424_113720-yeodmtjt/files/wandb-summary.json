@@ -1,0 +1,1 @@
+{"val/perplexity":2374.1191952698996,"iter":10,"_runtime":253.258098,"train/grad_norm":8.369450569152832,"_step":10,"timing/iter_time_ms":65994.80700492859,"train/lr":5.9999999999999995e-05,"_wandb":{"runtime":253},"_timestamp":1.745509272863343e+09,"val/loss":7.772381782531738,"train/loss":7.933802127838135}

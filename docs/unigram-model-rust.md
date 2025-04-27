@@ -30,7 +30,7 @@ Generating text would involve randomly picking words based on these probabilitie
 
 Here's a basic implementation of a Unigram Model in Rust:
 
-[Link to `unigram-model-rust_1.rs`](../src/unigram-model-rust_1.rs)
+[Link to `unigram-model-rust_1.rs`](../src/unigram-model-rust_1.rs) | [Python Equivalent (`unigram_model.py`)](../src/unigram_model.py)
 
 ## Explanation
 

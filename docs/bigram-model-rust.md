@@ -39,7 +39,7 @@ The example highlights a key problem: what happens if a bigram (like "the dog") 
 
 Here's a basic implementation of a Bigram Model in Rust:
 
-[Link to `bigram-model-rust_1.rs`](../src/bigram-model-rust_1.rs)
+[Link to `bigram-model-rust_1.rs`](../src/bigram-model-rust_1.rs) | [Python Equivalent (`bigram_model.py`)](../src/bigram_model.py)
 
 ## Explanation
 
