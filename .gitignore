@@ -56,4 +56,12 @@ cs336_basics_rs/target/
 # Model files
 *.pt
 *.pth
-*.ckpt 
+*.ckpt
+
+# Assignment 1 Large Files / Data
+spring2024-assignment1-basics/Anaconda3-*.sh
+spring2024-assignment1-basics/data/owt_train.txt
+spring2024-assignment1-basics/data/owt_valid.txt
+spring2024-assignment1-basics/data/tinystories/train.bin
+spring2024-assignment1-basics/data/tinystories_gpt2/train.bin
+spring2024-assignment1-basics/data/TinyStoriesV2-GPT4-train.txt 
